@@ -1,0 +1,51 @@
+# Three containers that work together:
+#   mysql    -> staging database (raw data)
+#   postgres -> analytics database (final results)
+#   airflow  -> runs the pipeline and shows it in a web page (http://localhost:8080)
+# Inside Docker, the containers find each other by these names (mysql, postgres).
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3307:3306"   # 3307 on my PC, so it does not clash with my own MySQL (3306)
+    volumes:
+      - ./sql/mysql_setup.sql:/docker-entrypoint-initdb.d/mysql_setup.sql
+      - mysql_data:/var/lib/mysql
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+    ports:
+      - "5433:5432"   # 5433 on my PC, so it does not clash with my own PostgreSQL (5432)
+    volumes:
+      - ./sql/postgres_setup.sql:/docker-entrypoint-initdb.d/postgres_setup.sql
+      - postgres_data:/var/lib/postgresql/data
+
+  airflow:
+    image: apache/airflow:2.10.5-python3.11
+    command: standalone   # web page + scheduler in one container (good for a lab)
+    env_file: .env
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      PYTHONPATH: /opt/airflow   # so the DAG can import my src/ files
+      # The image already has pandas, SQLAlchemy, PyMySQL, psycopg2 and python-dotenv
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+      - ./data:/opt/airflow/data
+    depends_on:
+      - mysql
+      - postgres
+
+volumes:
+  mysql_data:
+  postgres_data:
