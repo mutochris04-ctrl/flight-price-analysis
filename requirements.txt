@@ -1,0 +1,7 @@
+# Airflow itself runs in Docker (apache/airflow:2.10.5), which already includes
+# pandas, SQLAlchemy and psycopg2. These are the packages my code uses:
+pandas==2.1.4
+SQLAlchemy==1.4.54
+PyMySQL==1.1.1
+psycopg2-binary==2.9.10
+python-dotenv==1.0.1

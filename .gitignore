@@ -1,0 +1,16 @@
+# Secret information
+.env
+
+# Python temporary files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.venv/
+
+# The Kaggle dataset is large: download it into data/ (see README)
+data/*.csv
+
+# ...but keep my small test file (10 made-up rows)
+!data/mini_test_flights.csv
