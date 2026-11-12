@@ -14,3 +14,6 @@ data/*.csv
 
 # ...but keep my small test file (10 made-up rows)
 !data/mini_test_flights.csv
+
+# Alerts written by the pipeline (created when it runs)
+data/alerts.log
