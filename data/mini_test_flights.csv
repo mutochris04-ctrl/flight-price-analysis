@@ -1,0 +1,12 @@
+Airline,Source,Source Name,Destination,Destination Name,Departure Date & Time,Arrival Date & Time,Duration (hrs),Stopovers,Aircraft Type,Class,Booking Source,Base Fare (BDT),Tax & Surcharge (BDT),Total Fare (BDT),Seasonality,Days Before Departure
+Biman Bangladesh Airlines,DAC,Hazrat Shahjalal International Airport,CXB,Cox's Bazar Airport,2025-03-10 08:00:00,2025-03-10 09:00:00,1.0,Direct,Boeing 737,Economy,Online Website,20000,3000,23000,Regular,15
+US-Bangla Airlines,CGP,Shah Amanat International Airport,DAC,Hazrat Shahjalal International Airport,2025-04-02 10:00:00,2025-04-02 10:50:00,0.83,Direct,ATR 72,Economy,Travel Agency,15000,2000,17000,Eid,7
+Emirates,DAC,Hazrat Shahjalal International Airport,DXB,Dubai International Airport,2025-12-20 22:00:00,2025-12-21 03:00:00,5.0,Direct,Boeing 777,Business,Online Website,25000,4000,29000,Winter Holidays,30
+Qatar Airways,DAC,Hazrat Shahjalal International Airport,DOH,Hamad International Airport,2025-05-05 14:00:00,2025-05-05 19:00:00,5.0,Direct,Airbus A350,Economy,Direct Booking,-500,2000,1500,Regular,20
+Biman Bangladesh Airlines,DAC,Hazrat Shahjalal International Airport,CGP,Shah Amanat International Airport,2025-06-01 07:00:00,2025-06-01 07:45:00,0.75,Direct,Boeing 737,Economy,Online Website,12000,2000,,Regular,10
+US-Bangla Airlines,CGP,Shah Amanat International Airport,DAC,Hazrat Shahjalal International Airport,2025-04-02 10:00:00,2025-04-02 10:50:00,0.83,Direct,ATR 72,Economy,Travel Agency,15000,2000,17000,Eid,7
+Emirates,DAC,Hazrat Shahjalal International Airport,DXB,Dubai International Airport,2025-08-15 23:00:00,2025-08-16 04:00:00,5.0,Direct,Boeing 777,Economy,Online Website,10000,2000,20000,Regular,25
+,DAC,Hazrat Shahjalal International Airport,SPD,Saidpur Airport,2025-07-07 09:00:00,2025-07-07 10:00:00,1.0,Direct,ATR 72,Economy,Travel Agency,8000,1000,9000,Regular,5
+NovoAir,Dhaka,Hazrat Shahjalal International Airport,JSR,Jessore Airport,2025-09-09 12:00:00,2025-09-09 12:40:00,0.67,Direct,ATR 72,Economy,Online Website,6000,1000,7000,Regular,12
+Air Astra,CXB,Cox's Bazar Airport,CXB,Cox's Bazar Airport,2025-10-10 15:00:00,2025-10-10 16:00:00,1.0,Direct,ATR 72,Economy,Online Website,5000,800,5800,Regular,3
+Biman Bangladesh Airlines,DAC,Hazrat Shahjalal International Airport,ZYL,Osmani International Airport,2025-03-01 09:00:00,2025-03-01 09:45:00,0.75,Direct,ATR 72,Economy,Online Website,7000,1000,8000,Ramadan,9
