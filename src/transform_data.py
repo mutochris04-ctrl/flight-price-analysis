@@ -1,4 +1,7 @@
 """Task 3 - Transformation: total fare, route and season type for every valid flight."""
+# FLOW: Step 3 of 5 | ELTL: T (Transform, part 2 - new columns)
+# Before me: validate_data.py made validated_flights | After me: calculate_kpis.py reads transformed_flights
+
 import pandas as pd
 
 from src.db import get_mysql_engine
@@ -57,10 +60,12 @@ def transform_dataframe(df):
 def transform_data():
     """Read validated_flights, transform it, and save transformed_flights in MySQL."""
     engine = get_mysql_engine()
+    # INPUT: validated_flights (made in Step 2)
     df = pd.read_sql("SELECT * FROM validated_flights", engine)
 
     df = transform_dataframe(df)
 
+    # OUTPUT: transformed_flights (used in Step 4, and loaded to PostgreSQL in Step 5)
     df.to_sql("transformed_flights", engine, if_exists="replace", index=False, chunksize=1000)
     print("Saved", len(df), "rows to transformed_flights")
 

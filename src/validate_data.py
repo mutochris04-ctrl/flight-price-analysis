@@ -1,4 +1,7 @@
 """Task 2 - Validation and cleaning: check the staging data and separate good rows from bad rows."""
+# FLOW: Step 2 of 5 | ELTL: T (Transform, part 1 - validation)
+# Before me: ingest_data.py filled raw_flights | After me: transform_data.py reads validated_flights
+
 import pandas as pd
 
 from src.db import get_mysql_engine
@@ -118,10 +121,12 @@ def validate_dataframe(df):
 def validate_data():
     """Read raw_flights, validate it, and save validated_flights and rejected_flights in MySQL."""
     engine = get_mysql_engine()
+    # INPUT: raw_flights (made in Step 1)
     df = pd.read_sql("SELECT * FROM raw_flights", engine)
 
     valid, rejected = validate_dataframe(df)
 
+    # OUTPUT: good rows -> validated_flights (used in Step 3), bad rows -> rejected_flights (with the reason)
     valid.to_sql("validated_flights", engine, if_exists="replace", index=False, chunksize=1000)
     rejected.to_sql("rejected_flights", engine, if_exists="replace", index=False, chunksize=1000)
 

@@ -2,6 +2,9 @@
 
 The column names and data types are standardized on the way in, so the data is easier to process.
 """
+# FLOW: Step 1 of 5 | ELTL: E (Extract) + L (Load raw data)
+# Before me: wait_for_csv says the CSV is ready | After me: validate_data.py reads raw_flights
+
 from pathlib import Path
 
 import pandas as pd
@@ -48,6 +51,7 @@ DATE_COLUMNS = ["departure_date_time", "arrival_date_time"]
 
 def read_csv(csv_file=CSV_FILE):
     """Read the CSV, rename the columns and give each column the right type."""
+    # E = EXTRACT: take the data out of the CSV file
     df = pd.read_csv(csv_file)
     print("Read", len(df), "rows from", csv_file.name)
 
@@ -83,6 +87,7 @@ def ingest_data():
 
     with engine.begin() as connection:
         connection.execute(text("TRUNCATE TABLE raw_flights"))  # no duplicates if the DAG runs again
+        # L = LOAD (1st load): put the raw rows into the MySQL staging table raw_flights
         df.to_sql("raw_flights", connection, if_exists="append", index=False,
                   chunksize=1000, method="multi")
         rows_in_mysql = connection.execute(text("SELECT COUNT(*) FROM raw_flights")).scalar()

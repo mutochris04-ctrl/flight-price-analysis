@@ -1,4 +1,7 @@
 """Task 4 - KPIs: the four business measurements required by the lab."""
+# FLOW: Step 4 of 5 | ELTL: T (Transform, part 3 - KPIs)
+# Before me: transform_data.py made transformed_flights | After me: load_data.py copies the KPI tables
+
 import pandas as pd
 
 from src.db import get_mysql_engine
@@ -77,10 +80,12 @@ def calculate_kpis_dataframe(df):
 def calculate_kpis():
     """Read transformed_flights, calculate the KPIs and save each one in MySQL."""
     engine = get_mysql_engine()
+    # INPUT: transformed_flights (made in Step 3)
     df = pd.read_sql("SELECT * FROM transformed_flights", engine)
 
     kpis = calculate_kpis_dataframe(df)
 
+    # OUTPUT: kpi_airline, kpi_season, kpi_peak, kpi_route in MySQL (loaded to PostgreSQL in Step 5)
     for name, result in kpis.items():
         result.to_sql(name, engine, if_exists="replace", index=False)
     print("\nSaved", len(kpis), "KPI tables in MySQL")

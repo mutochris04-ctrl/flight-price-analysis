@@ -1,4 +1,8 @@
 """Task 5 - Loading: copy the clean flights and the KPI tables from MySQL to PostgreSQL."""
+# FLOW: Step 5 of 5 (last step) | ELTL: L (Load, 2nd load - the final one)
+# Before me: calculate_kpis.py made the KPI tables | After me: the pipeline is finished,
+# the results are in PostgreSQL, ready for analysis
+
 import pandas as pd
 from sqlalchemy import text
 
@@ -22,6 +26,7 @@ def load_data():
     mysql_engine = get_mysql_engine()
     postgres_engine = get_postgres_engine()
 
+    # INPUT: transformed_flights + the 4 KPI tables from MySQL (Steps 3 and 4)
     # 1. Read everything from MySQL first
     data = {}
     for mysql_table, postgres_table in TABLES.items():
@@ -30,6 +35,7 @@ def load_data():
     # MySQL stores True/False as 1/0; PostgreSQL needs real booleans
     data["flights"]["fare_mismatch"] = data["flights"]["fare_mismatch"].astype(bool)
 
+    # L = LOAD (2nd load): MySQL staging -> PostgreSQL analytics
     # 2. Replace the PostgreSQL data in one transaction
     with postgres_engine.begin() as connection:
         connection.execute(text("TRUNCATE TABLE " + ", ".join(data.keys())))

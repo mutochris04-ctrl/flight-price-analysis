@@ -1,4 +1,15 @@
 """Airflow DAG: Bangladesh flight price pipeline (CSV -> MySQL -> validate -> KPIs -> PostgreSQL)."""
+# ----------------------------------------------------------------------
+# THE LOGICAL ORDER OF MY LAB - ELTL = Extract, Load, Transform, Load
+#   Step 0  wait_for_csv         -> wait until the CSV file has arrived
+#   Step 1  ingest_csv_to_mysql  -> E + L : Extract the CSV, Load it RAW into MySQL (staging)
+#   Step 2  validate_data        -> T     : Transform part 1 - good rows / bad rows
+#   Step 3  transform_data       -> T     : Transform part 2 - total fare, route, peak season
+#   Step 4  calculate_kpis       -> T     : Transform part 3 - the 4 KPIs
+#   Step 5  load_to_postgres     -> L     : Load the final results into PostgreSQL (analytics)
+# Data path: CSV -> raw_flights -> validated_flights -> transformed_flights -> kpi_* tables
+#            (all in MySQL)  -> then copied to PostgreSQL
+# ----------------------------------------------------------------------
 import os
 from datetime import datetime, timedelta
 
@@ -77,4 +88,5 @@ with DAG(
     load = PythonOperator(task_id="load_to_postgres", python_callable=load_data)
 
     # The order of the tasks
+    # Step 0 -> 1 -> 2 -> 3 -> 4 -> 5: a task starts only when the task before it succeeded
     wait_for_csv >> ingest >> validate >> transform >> kpis >> load
